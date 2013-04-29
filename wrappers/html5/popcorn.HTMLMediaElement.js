@@ -19,6 +19,9 @@
     // Add the helper function _canPlaySrc so this works like other wrappers.
     media._canPlaySrc = canPlaySrc;
 
+    // Add the helper property canRatePlayback so this works like other wrappers.
+    media.canRatePlayback = true;
+
     return media;
   }
 
