@@ -534,10 +534,12 @@
         }
       },
 
+      // Determine if the player can rate the playback
+      // Vimeo player can't rate playback, always return false
       canRatePlayback: {
-        get: function() {
-          return false;
-        }
+          get: function() {
+              return false;
+          }
       },
 
       duration: {
