@@ -534,6 +534,12 @@
         }
       },
 
+      canRatePlayback: {
+        get: function() {
+          return false;
+        }
+      },
+
       duration: {
         get: function() {
           return impl.duration;
