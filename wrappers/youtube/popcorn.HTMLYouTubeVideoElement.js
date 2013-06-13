@@ -89,6 +89,7 @@
       bufferedInterval,
       lastLoadedFraction = 0,
       currentTimeInterval,
+      currentStateInterval,
       timeUpdateInterval,
       firstPlay = true;
 
@@ -116,6 +117,7 @@
       playerReady = true;
       // XXX: this should really live in cued below, but doesn't work.
 
+      currentStateInterval = setInterval(pollingPlayerState, 10);
       // Browsers using flash will have the pause() call take too long and cause some
       // sound to leak out. Muting before to prevent this.
       player.mute();
@@ -183,6 +185,15 @@
 
       impl.error = err;
       self.dispatchEvent( "error" );
+    }
+
+    function pollingPlayerState () {
+      var state = player.getPlayerState();
+      if ( playerState !== state ) {
+        onPlayerStateChange( {
+          data: state
+        } );
+      }
     }
 
     function onPlayerStateChange( event ) {
@@ -296,6 +307,7 @@
       }
       clearInterval( currentTimeInterval );
       clearInterval( bufferedInterval );
+      clearInterval( currentStateInterval );
       player.stopVideo();
       player.clearVideo();
 
