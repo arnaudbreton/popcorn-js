@@ -47,6 +47,10 @@
       ytCallbacks[ i ]();
       delete ytCallbacks[ i ];
     }
+
+    if(YT && YT.PlayerState && !YT.PlayerState.UNSTARTED) {
+      YT.PlayerState.UNSTARTED = -1;
+    }
   };
 
   function HTMLYouTubeVideoElement( id ) {
@@ -198,6 +202,10 @@
 
     function onPlayerStateChange( event ) {
       switch( event.data ) {
+        case YT.PlayerState.UNSTARTED:
+          impl.src = player.getVideoUrl();
+
+          self.dispatchEvent("unstarted");
 
         // ended
         case YT.PlayerState.ENDED:
